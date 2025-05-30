@@ -141,13 +141,11 @@ def subset(df, start=pd.Timestamp('2000-01-01'), end=pd.Timestamp('2000-01-01'))
     return df.loc[start:end]
 
 
-def index_days(df):
-    df = df.copy()
-    df['date_only'] = df.index.normalize()
+def index_df(df):
+    df.index = df.index.normalize()
     df = df[~df.index.duplicated(keep='first')]
-    df = df[~df['date_only'].duplicated(keep='first')]
-    df = df.set_index('date_only')
     return df
+
 
 def get_min_max_time(df):
     return df.index.min(), df.index.max()
